@@ -6,9 +6,9 @@ import Header from "./component/Common/Header/Header";
 function App() {
   return (
     <>
-    <Header />
+      <Header />
       <Routes>
-        <Route path="/" />
+        <Route path="/Home" />
       </Routes>
       <Footer />
     </>
