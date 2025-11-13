@@ -6,7 +6,9 @@ const Header = () => {
     <>
     <StyledHeader>
       <IconLogo>
-      <Logo src={logo} alt="로고없음" />
+        <a href="/">
+          <Logo src={logo} alt="로고없음" />
+        </a>
       </IconLogo>
       <Frame>
         <NavItem href="/cars/searchList">차량찾기</NavItem>
