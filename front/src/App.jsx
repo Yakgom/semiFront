@@ -17,13 +17,14 @@ function App() {
       {!isAdminPage && <Header />}
 
       <Routes>
-
         <Route path="/" element={<Home />} />
         <Route path="/cars/searchList" element={<CarsSearchList />} />
-        <Route path="/cars/detail" element={<CarsDetail/>} />
-        <Route path="/cars/reserve/confirm" element={<CarsReservationConfirm />} />
+        <Route path="/cars/detail" element={<CarsDetail />} />
+        <Route
+          path="/cars/reserve/confirm"
+          element={<CarsReservationConfirm />}
+        />
         <Route path="/admin/*" element={<AdminHome />} />
-
       </Routes>
 
       {!isAdminPage && <Footer />}
