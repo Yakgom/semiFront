@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./component/Common/Footer/Footer";
 import Header from "./component/Common/Header/Header";
 import Home from "./component/Common/Home/Home";
-import AdminList from "./component/Admin/layouts/AdminList";
+import AdminHome from "./Admin/Pages/AdminHome";
 
 function App() {
   const location = useLocation();
@@ -15,7 +15,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin/*" element={<AdminList />} />
+        <Route path="/admin/*" element={<AdminHome />} />
       </Routes>
 
       {!isAdminPage && <Footer />}
