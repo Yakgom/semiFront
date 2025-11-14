@@ -13,31 +13,26 @@ import ImgBoardForm from "./component/Boards/ImgBoard/ImgBoardForm";
 import CarsSearchList from "./component/Cars/CarsSearchList";
 import CarsDetail from "./component/Cars/CarsDetail";
 import AdminHome from "./Admin/Pages/AdminHome";
+import Join from "./component/Member/Join/Join";
+
 import CarsReservationConfirm from "./component/Cars/CarsReservationConfirm";
 import CarsReservation from "./component/Cars/CarsReservationForm";
 import CarsUsageHistory from "./component/Cars/CarsUsageHistory";
 
-
-
 function App() {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
-
+  const isJoin = location.pathname.startsWith("/members/join");
   return (
     <>
-      {!isAdminPage && <Header />}
-
+      {!isJoin && !isAdminPage && <Header />}
       <Routes>
-
         <Route path="/" element={<Home />}/>
         <Route path="/boards" element={<Board />} />
         <Route path="/boards/write" element={<BoardForm />} />
         <Route path="/boards/:id" element={<BoardDetail />} />
         <Route path="/boards/imgBoard" element={<ImgBoard  />} />
         <Route path="/boards/imgBoard/write" element={<ImgBoardForm />} />
-      
-      
-
         <Route path="/cars/searchList" element={<CarsSearchList />} />
         <Route path="/cars/detail" element={<CarsDetail />} />
         <Route path="/cars/reserve" element={<CarsReservation />} />
@@ -45,12 +40,11 @@ function App() {
           path="/cars/reserve/confirm"
           element={<CarsReservationConfirm />}
         />
-        <Route path="/reserves/detail" element={<CarsUsageHistory/>} />
+        <Route path="/reserves/detail" element={<CarsUsageHistory />} />
         <Route path="/admin/*" element={<AdminHome />} />
+        <Route path="/members/join" element={<Join />} />
       </Routes>
-
-      {!isAdminPage && <Footer />}
-
+      {!isJoin && !isAdminPage && <Footer />}
     </>
   );
 }

@@ -8,36 +8,14 @@ import {
   ButtonText2,
   IconLogo,
 } from "./Header.styles";
-import logo from "../../../assets/HeaderLogo.png";
+import logo from "../../../assets/adminLogo.png";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import Board from "../../Boards/Board/Board";
-=======
->>>>>>> 4356d79414113fcac17fab76407fb6999cdfdd24
 
 const Header = () => {
   const navi = useNavigate();
   return (
     <>
-<<<<<<< HEAD
-    <StyledHeader>
-      <IconLogo>
-        <a href="/">
-          <Logo src={logo} alt="로고없음" />
-        </a>
-      </IconLogo>
-      <Frame>
-        <NavItem href="/cars/searchList">차량찾기</NavItem>
-        <NavItem href="/stations">충전소</NavItem>
-        <NavItem onClick={() =>navi("/boards")}>커뮤니티</NavItem>
-        <ButtonWrapper>
-          <ButtonText href="/members/join">로그인</ButtonText>
-          <ButtonText2>/</ButtonText2>
-          <ButtonText href="/members/login">회원가입</ButtonText>
-        </ButtonWrapper>
-      </Frame>
-    </StyledHeader>
-=======
       <StyledHeader>
         <IconLogo>
           <a onClick={() => navi("/")}>
@@ -49,17 +27,16 @@ const Header = () => {
           <NavItem onClick={() => navi("/stations")}>충전소</NavItem>
           <NavItem onClick={() => navi("/boards")}>커뮤니티</NavItem>
           <ButtonWrapper>
-            <ButtonText onClick={() => navi("/members/join")}>
+            <ButtonText onClick={() => navi("/members/login")}>
               로그인
             </ButtonText>
             <ButtonText2>/</ButtonText2>
-            <ButtonText onClick={() => navi("/members/login")}>
+            <ButtonText onClick={() => navi("/members/join")}>
               회원가입
             </ButtonText>
           </ButtonWrapper>
         </Frame>
       </StyledHeader>
->>>>>>> 4356d79414113fcac17fab76407fb6999cdfdd24
     </>
   );
 };
