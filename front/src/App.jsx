@@ -28,11 +28,11 @@ function App() {
     <>
       {!isJoin && !isAdminPage && <Header />}
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Home />} />
         <Route path="/boards" element={<Board />} />
         <Route path="/boards/write" element={<BoardForm />} />
         <Route path="/boards/:id" element={<BoardDetail />} />
-        <Route path="/boards/imgBoard" element={<ImgBoard  />} />
+        <Route path="/boards/imgBoard" element={<ImgBoard />} />
         <Route path="/boards/imgBoard/write" element={<ImgBoardForm />} />
         <Route path="/cars/searchList" element={<CarsSearchList />} />
         <Route path="/cars/detail" element={<CarsDetail />} />
@@ -41,7 +41,10 @@ function App() {
           path="/cars/reserve/confirm"
           element={<CarsReservationConfirm />}
         />
-        <Route path="/reserves/searchList" element={<CarsReservationChange />} />
+        <Route
+          path="/reserves/searchList"
+          element={<CarsReservationChange />}
+        />
         <Route path="/reserves/detail" element={<CarsUsageHistory />} />
         <Route path="/admin/*" element={<AdminHome />} />
         <Route path="/members/join" element={<Join />} />
