@@ -1,77 +1,91 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
-  ButtonWrapper,
   Container,
   Header,
-  Pagination,
-  SelectBox,
   Tab,
-  Table,
   TabMenu,
-  Td,
-  Th,
+  Table,
   Thead,
-  TitleTd,
   Tr,
+  Th,
+  Td,
+  TitleTd,
+  Pagination,
+  ButtonWrapper,
   WriteButton,
+  SelectBox,
 } from "./Board.styles";
 import gasipan from "../../../assets/gasipan.png";
 
 const Board = () => {
-  const [notices, setNotices] = useState([]);
-  const [posts, setPosts] = useState([]);
+  const [boards, setBoards] = useState([]);
+  const [page, setPage] = useState(0);     // 0부터 시작
+  const [totalPages, setTotalPages] = useState(1);
 
-  // 검색 기능
   const [searchType, setSearchType] = useState("title");
   const [keyword, setKeyword] = useState("");
 
   const navi = useNavigate();
 
-  // 게시글 / 공지사항 불러오기
+  // 페이지별 게시글 로딩
   useEffect(() => {
-    const fetchBoardData = async () => {
-      try {
-        // 공지사항
-        const noticeRes = await fetch("/api/board/notices");
-        const noticeData = await noticeRes.json();
+    axios
+      .get(`http://localhost:8081/boards?page=${page}`)
+      .then((response) => {
+        setBoards(response.data.content);   // 서버에서 content 형태로 받는 경우에 맞춤
+        setTotalPages(response.data.totalPages);
+      })
+      .catch((err) => {
+        console.error("게시판 페이지 로딩 실패:", err);
+      });
+  }, [page]);
 
-        // 일반 게시글
-        const postRes = await fetch("/api/board/list?page=1");
-        const postData = await postRes.json();
+  // 상세보기 + 조회수 증가
+  const handleView = (id) => {
+    axios
+      .post(`/boards/${id}/view`)
+      .then(() => navi(`/boards/${id}`))
+      .catch(() => navi(`/boards/${id}`));
+  };
 
-        setNotices(noticeData);
-        setPosts(postData);
-      } catch (err) {
-        //console.error("게시판 데이터 로딩 실패:", err);
-      }
-    };
-    fetchBoardData();
-  }, []);
-
-  // 🔍 검색 기능 실행
-  const handleSearch = async () => {
+  // 검색 기능
+  const handleSearch = () => {
     if (!keyword.trim()) return alert("검색어를 입력하세요!");
 
-    const res = await fetch(
-      `/api/board/search?type=${searchType}&keyword=${keyword}`
-    );
-    const data = await res.json();
-    setPosts(data);
+    axios
+      .get("http://localhost:8081/boards/search", {
+        params: {
+          type: searchType,
+          keyword: keyword,
+          page: page,
+        },
+      })
+      .then((res) => {
+        setBoards(res.data.content);
+        setTotalPages(res.data.totalPages);
+      })
+      .catch((err) => console.error("검색 실패:", err));
   };
 
   return (
     <Container>
+
+      {/* 헤더 */}
       <Header>
         <img src={gasipan} alt="" style={{ width: "100%" }} />
         <div className="title-overlay">일반 게시판</div>
       </Header>
 
+      {/* 탭 메뉴 */}
       <TabMenu>
-        <Tab active onClick={() => navi("/boards/")}>일반</Tab>
-        <Tab onClick={() => navi("/boards/imgBoard")}>갤러리</Tab>
+        <Tab onClick={() => navi("/boards/notices")}>공지사항</Tab>
+        <Tab active onClick={() => navi("/boards")}>일반</Tab>
+        <Tab onClick={() => navi("/boards/imgBoards")}>갤러리</Tab>
       </TabMenu>
 
+      {/* 테이블 */}
       <Table>
         <Thead>
           <Tr>
@@ -84,81 +98,105 @@ const Board = () => {
         </Thead>
 
         <tbody>
-          {/* 공지사항 */}
-          {notices.map((notice) => (
-            <Tr key={notice.id}>
-              <Td style={{ color: "red", fontWeight: "bold" }}>공지</Td>
-              <TitleTd
-                style={{ cursor: "pointer" }}
-                onClick={() => navi(`/boards/${notice.id}`)}
-              >
-                {notice.title}
-              </TitleTd>
-              <Td>{notice.author}</Td>
-              <Td>{notice.date}</Td>
-              <Td>{notice.views}</Td>
-            </Tr>
-          ))}
+          {boards.map((board) => (
+            <Tr key={board.boardNo}>
+              <Td>{board.boardNo}</Td>
 
-          {/* 일반 게시글 */}
-          {posts.map((post) => (
-            <Tr key={post.id}>
-              <Td>{post.id}</Td>
               <TitleTd
                 style={{ cursor: "pointer" }}
-                onClick={() => navi(`/boards/${post.id}`)}
+                onClick={() => handleView(board.boardNo)}
               >
-                {post.title}
+                {board.boardTitle}
               </TitleTd>
-              <Td>{post.author}</Td>
-              <Td>{post.date}</Td>
-              <Td>{post.views}</Td>
+
+              <Td>{board.boardWriter}</Td>
+              <Td>{board.boardDate}</Td>
+              <Td>{board.boardCount}</Td>
             </Tr>
           ))}
         </tbody>
       </Table>
 
-      {/* 글쓰기 버튼 */}
+      {/* 페이지네이션 */}
+      <Pagination>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => setPage(i)}
+            style={{
+              padding: "6px 10px",
+              margin: "0 4px",
+              background: page === i ? "black" : "lightgray",
+              color: page === i ? "white" : "black",
+              borderRadius: "4px",
+            }}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </Pagination>
+
+      {/* 글쓰기 */}
       <ButtonWrapper>
         <WriteButton onClick={() => navi("/boards/write")}>
           글쓰기
         </WriteButton>
       </ButtonWrapper>
 
-      {/* 검색 영역 */}
-      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 20 }}>
-        <SelectBox onChange={(e) => setSearchType(e.target.value)}>
-          <option value="title">제목</option>
-          <option value="writer">작성자</option>
-          <option value="content">내용</option>
-        </SelectBox>
+      {/* 검색 */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",   // 핵심!
+              marginTop: 20,
+              gap: "10px",            // 간격 안정적
+            }}>
+    
+            {/* SelectBox */}
+            <SelectBox
+              onChange={(e) => setSearchType(e.target.value)}
+              style={{
+                height: "40px",
+                padding: "0 10px",
+                fontSize: "14px",
+                borderRadius: "6px",
+              }}>
+    
+              <option value="title">제목</option>
+              <option value="writer">작성자</option>
+              <option value="content">내용</option>
+            </SelectBox>
+    
+            {/* Input */}
+            <input
+              type="text"
+              placeholder="검색어 입력"
+              onChange={(e) => setKeyword(e.target.value)}
+              style={{
+                height: "40px",
+                padding: "0 10px",
+                fontSize: "14px",
+                border: "1px solid gray",
+                borderRadius: "6px",
+              }} />
+    
+            {/* Button */}
+            <button
+              onClick={handleSearch}
+              style={{
+                height: "40px",
+                padding: "0 20px",
+                fontSize: "14px",
+                background: "black",
+                color: "white",
+                borderRadius: "6px",
+                cursor: "pointer",
+                border: "none",
+              }}>검색</button>
+    
+          </div>
 
-        <input
-          type="text"
-          placeholder="검색어 입력"
-          onChange={(e) => setKeyword(e.target.value)}
-          style={{
-            marginLeft: "10px",
-            padding: "5px",
-            border: "1px solid gray",
-            borderRadius: "6px",
-          }}
-        />
-
-        <button
-          onClick={handleSearch}
-          style={{
-            marginLeft: "10px",
-            padding: "5px 15px",
-            background: "black",
-            color: "white",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          검색
-        </button>
-      </div>
     </Container>
   );
 };

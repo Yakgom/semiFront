@@ -60,7 +60,7 @@ const BoardForm = () => {
     <Container>
       <Header>
         <img src={gasipan} alt="" style={{ width: "100%" }} />
-        <div className="title-overlay">게시글 작성</div>
+        <div className="title-overlay">일반 게시글 작성</div>
       </Header>
 
       <Form onSubmit={handleSubmit}>
@@ -85,6 +85,9 @@ const BoardForm = () => {
         />
 
         <Button>등록하기</Button>
+        <Button onClick={() => navi(-1)} style={{ background: "blue" }}>
+                뒤로가기
+              </Button>
       </Form>
     </Container>
   );

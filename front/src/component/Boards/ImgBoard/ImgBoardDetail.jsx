@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
+//import { AuthContext } from "../context/AuthContext";
 import {
   Container,
   Header,
@@ -20,7 +20,7 @@ const ImgBoardDetail = () => {
   const navi = useNavigate();
 
   const [board, setBoard] = useState(null);
-  const { auth } = useContext(AuthContext);
+  //const { auth } = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -34,12 +34,12 @@ const ImgBoardDetail = () => {
     if (!window.confirm("정말 삭제할까요?")) return;
 
     axios
-      .delete(`http://localhost:8081/boards/${id}`, {
+      .delete(`http://localhost:8081/imgBoards/${id}`, {
         headers: { Authorization: `Bearer ${auth.accessToken}` },
       })
       .then(() => {
         alert("삭제되었습니다!");
-        navi("/boards");
+        navi("/imgBoards");
       });
   };
 
