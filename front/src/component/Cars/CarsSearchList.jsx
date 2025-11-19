@@ -74,14 +74,6 @@ const CarsSearchList = () => {
               <StatLabel>대여 중</StatLabel>
               <StatValue>-- 대</StatValue>
             </StatItem>
-            <StatItem>
-              <StatLabel>총 주행거리</StatLabel>
-              <StatValue>--.-- km</StatValue>
-            </StatItem>
-            <StatItem>
-              <StatLabel>절감된 CO₂</StatLabel>
-              <StatValue>--.--kg</StatValue>
-            </StatItem>
           </StatsCard>
         </TopSection>
 
