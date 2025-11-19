@@ -37,10 +37,10 @@ function App() {
       {!isJoin && !isAdminPage && !isLogin && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/boards" element={<Board />} />
+        <Route path="/boards/boards" element={<Board />} />
         <Route path="/boards/notices" element={<Notice />} />
-        <Route path="/boards/write" element={<BoardForm />} />
-        <Route path="/boards/:id" element={<BoardDetail />} />
+        <Route path="/boards/boards/write" element={<BoardForm />} />
+        <Route path="/boards/boards/:id" element={<BoardDetail />} />
         <Route path="/boards/imgBoards" element={<ImgBoard  />} />
         <Route path="/boards/imgBoards/write" element={<ImgBoardForm />} />
         <Route path="/boards/imgBoards/:id" element={<ImgBoardDetail />} />

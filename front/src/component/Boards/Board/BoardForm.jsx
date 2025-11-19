@@ -15,12 +15,11 @@ import gasipan from "../../../assets/gasipan.png";
 const BoardForm = () => {
   const [boardTitle, setBoardTitle] = useState("");
   const [boardContent, setBoardContent] = useState("");
-  const [file, setFile] = useState(null);
 
   //const { auth } = useContext(AuthContext);
   const navi = useNavigate();
 
-//   // 로그인 체크
+   // 로그인 체크
 //   useEffect(() => {
 //     if (!auth.isAuthenticated) {
 //       alert("로그인이 필요합니다!");
@@ -38,10 +37,9 @@ const BoardForm = () => {
      const formData = new FormData();
      formData.append("boardTitle", boardTitle);
      formData.append("boardContent", boardContent);
-     if (file) formData.append("file", file);
 
      axios
-       .post("http://localhost:8081/boards", formData, {
+       .post("http://localhost:8081/boards/boards", formData, {
          headers: {
            Authorization: `Bearer ${auth.accessToken}`,
            "Content-Type": "multipart/form-data",
@@ -50,7 +48,7 @@ const BoardForm = () => {
        .then((res) => {
          if (res.status === 201) {
            alert("게시글이 등록되었습니다!");
-           navi("/boards");
+           navi("/boards/boards");
          }
        })
        .catch((err) => console.log(err));

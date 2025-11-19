@@ -23,7 +23,7 @@ const BoardDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/boards/${id}`)
+      .get(`http://localhost:8081/boards/boards/${id}`)
       .then((res) => setBoard(res.data))
       .catch((err) => console.log(err));
   }, [id]);
@@ -33,12 +33,12 @@ const BoardDetail = () => {
     if (!window.confirm("정말 삭제할까요?")) return;
 
     axios
-      .delete(`http://localhost:8081/boards/${id}`, {
+      .delete(`http://localhost:8081/boards/boards/${id}`, {
         headers: { Authorization: `Bearer ${auth.accessToken}` },
       })
       .then(() => {
         alert("삭제되었습니다!");
-        navi("/boards");
+        navi("/boards/boards");
       });
   };
 
@@ -58,7 +58,7 @@ const BoardDetail = () => {
       {/* 작성자만 수정/삭제 가능 */}
       {board.boardWriter === auth.memberId && (
         <div style={{ marginTop: "10px" }}>
-          <Button onClick={() => navi(`/boards/edit/${id}`)}>
+          <Button onClick={() => navi(`/boards/boards/edit/${id}`)}>
             수정하기
           </Button>
 
