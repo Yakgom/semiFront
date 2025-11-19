@@ -106,7 +106,7 @@ const CarsSearchList = () => {
               </CarCard>
             ))}
           </CarGrid>
-
+ 
           {hasMore && (
             <LoadMoreButton onClick={increasePage}>
               더보기
