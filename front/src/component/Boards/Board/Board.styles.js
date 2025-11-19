@@ -104,9 +104,14 @@ export const Pagination = styled.div`
 `;
 
 export const SelectBox = styled.select`
-  margin-top: 20px;
-  padding: 6px 10px;
+  padding: 0 10px;
   border: 1px solid #aaa;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 14px;
+  appearance: none;
+  display: flex;
+  align-items: center;
 `;
 
 export const Button = styled.button`

@@ -121,3 +121,4 @@ width: 100%;
 
 
 `;
+export const PageButtton = styled.button``;

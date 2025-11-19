@@ -17,23 +17,38 @@ import Join from "./component/Member/Join/Join";
 
 import CarsReservationConfirm from "./component/Cars/CarsReservationConfirm";
 import CarsReservation from "./component/Cars/CarsReservationForm";
+import CarsReservationChange from "./component/Cars/CarsReservationChange";
 import CarsUsageHistory from "./component/Cars/CarsUsageHistory";
+
 import Station from "./component/Stations/Station";
+
+import Notice from "./component/Boards/Notice/Notice";
+import ImgBoardDetail from "./component/Boards/ImgBoard/ImgBoardDetail";
+import Login from "./component/Member/Login/Login";
+import UserDetail from "./component/Member/detail/UserDetail";
+import UserChangePwd from "./component/Member/detail/UserChangePwd";
+import UserDelete from "./component/Member/detail/UserDelete";
+import UserUpdate from "./component/Member/detail/UserUpdate";
 
 function App() {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
   const isJoin = location.pathname.startsWith("/members/join");
+  const isLogin = location.pathname.startsWith("/members/login");
   return (
     <>
-      {!isJoin && !isAdminPage && <Header />}
+      {!isJoin && !isAdminPage && !isLogin && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/boards" element={<Board />} />
+        <Route path="/boards/notices" element={<Notice />} />
         <Route path="/boards/write" element={<BoardForm />} />
         <Route path="/boards/:id" element={<BoardDetail />} />
         <Route path="/boards/imgBoard" element={<ImgBoard />} />
         <Route path="/boards/imgBoard/write" element={<ImgBoardForm />} />
+        <Route path="/boards/imgBoards" element={<ImgBoard />} />
+        <Route path="/boards/imgBoards/write" element={<ImgBoardForm />} />
+        <Route path="/boards/imgBoards/:id" element={<ImgBoardDetail />} />
         <Route path="/cars/searchList" element={<CarsSearchList />} />
         <Route path="/cars/detail" element={<CarsDetail />} />
         <Route path="/cars/reserve" element={<CarsReservation />} />
@@ -41,12 +56,21 @@ function App() {
           path="/cars/reserve/confirm"
           element={<CarsReservationConfirm />}
         />
+        <Route
+          path="/reserves/searchList"
+          element={<CarsReservationChange />}
+        />
         <Route path="/reserves/detail" element={<CarsUsageHistory />} />
         <Route path="/admin/*" element={<AdminHome />} />
         <Route path="/members/join" element={<Join />} />
         <Route path="/stations" element={<Station />} />
+        <Route path="/members/login" element={<Login />} />
+        <Route path="/members/detail" element={<UserDetail />} />
+        <Route path="/members/detail/changePwd" element={<UserChangePwd />} />
+        <Route path="/members/detail/delete" element={<UserDelete />} />
+        <Route path="/members/detail/update" element={<UserUpdate />} />
       </Routes>
-      {!isJoin && !isAdminPage && <Footer />}
+      {!isJoin && !isAdminPage && !isLogin && <Footer />}
     </>
   );
 }

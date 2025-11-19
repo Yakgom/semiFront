@@ -106,6 +106,9 @@ const ImgBoardForm = () => {
         <Input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
         <ImagePreview src="" alt="미리보기"></ImagePreview>
         <Button>등록하기</Button>
+        <Button onClick={() => navi(-1)} style={{ background: "blue" }}>
+                뒤로가기
+              </Button>
       </Form>
     </Container>
   );
