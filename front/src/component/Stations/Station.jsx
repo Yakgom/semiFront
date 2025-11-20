@@ -11,114 +11,127 @@ import {
   SearchResult,
   SearchWrapper,
 } from "./Station.style";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; // 이 줄이 있는지 확인!
 import axios from "axios";
-//useEffect는 매페이지 열릴때마다 보여주는것이다.
-//useState
-
 const Station = () => {
   const [positions, setPositions] = useState([]);
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isRecomend, setIsRecomend] = useState(null);
-  const [searchStation, setSearchStation] = useState(null);
-  //페이징
+  const [searchStation, setSearchStation] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchResult, setSearchResult] = useState([]);
+
   const reviewsPerPage = 5;
-  //현재 페이지 리뷰 계산
   const indexOfLast = currentPage * reviewsPerPage;
   const indexOfFirst = indexOfLast - reviewsPerPage;
+  // handleSearch 함수를 useEffect 밖으로 이동
+  const handleSearch = () => {
+    const keyword = (searchStation || "").trim();
+    if (!keyword) {
+      alert("검색어를 입력하세요!");
+      return;
+    }
+    axios
+      .get("http://localhost:8081/station/search", {
+        params: { keyword: keyword },
+      })
+      .then((response) => {
+        const result = response.data;
+        //가공
+        const mapped = result.map((e) => {
+          return {
+            stationName: e.stationName,
+            address: e.address,
+            lat: e.latitude,
+            lng: e.longitude,
+          };
+        });
+
+        //searchResult에 세팅[]
+        setSearchResult(mapped);
+      })
+      .catch((error) => {
+        console.error("검색실패:", error);
+      });
+  };
   useEffect(() => {
-    const searchStation = setSearchStation(() => {});
-    //if (!location) return;
+    // 이 부분 추가!
     console.log(location);
     setLoading(false);
-    // 1. Kakao Maps API 로드 확인
+
     if (!window.kakao || !window.kakao.maps) {
       setError("카카오 맵 API를 로드할 수 없습니다.");
       setLoading(false);
       return;
     }
-    console.log(navigator.geolocation);
-    // 2. Geolocation 지원 확인
+
     if (!navigator.geolocation) {
       setError("Geolocation을 지원하지 않는 브라우저입니다.");
       setLoading(false);
       return;
     }
-    // 3. 위치 정보 가져오기
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        //console.log(lat);
-        //console.log(lng);
+
         setLocation({
           latitude: lat,
           longitude: lng,
         });
+        //★ 주영님 바보 똥 멍텅이 메롱 ★
         if (!location) return;
-        //사용자 주소를 앞단으로 보냄
+
         const fn1 = async () => {
-          const abcd = await axios.get(
-            "http://localhost:8081/station/EvCharge",
-            {
-              params: {
-                lat: location.latitude,
-                lng: location.longitude,
-              },
-            }
-          );
+          const abcd = await axios.get("http://localhost:8081/station", {
+            params: {
+              lat: location.latitude,
+              lng: location.longitude,
+            },
+          });
 
           const mmm = abcd.data.map((e) => {
             return {
               title: e.stationName,
+              subtitle: e.address,
               latlng: new kakao.maps.LatLng(e.lat, e.lng),
             };
           });
 
           setPositions([...mmm]);
 
-          //console.log(positions);
-          // 4. 지도 생성 (위치 정보 받은 후)
           const container = document.getElementById("map");
           const options = {
-            center: new window.kakao.maps.LatLng(lat, lng), // 현재 위치로 설정
+            center: new window.kakao.maps.LatLng(lat, lng),
             level: 3,
           };
 
           const map = new window.kakao.maps.Map(container, options);
           var markerPosition = new kakao.maps.LatLng(lat, lng);
 
-          // 마커를 생성합니다
           var marker = new kakao.maps.Marker({
             position: markerPosition,
           });
 
-          // 마커가 지도 위에 표시되도록 설정합니다
           marker.setMap(map);
 
           var imageSrc =
             "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
           for (var i = 0; i < mmm.length; i++) {
-            // 마커 이미지의 이미지 크기 입니다
             var imageSize = new kakao.maps.Size(24, 35);
-
-            // 마커 이미지를 생성합니다
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-            // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
-              map: map, // 마커를 표시할 지도
-              position: mmm[i].latlng, // 마커를 표시할 위치
-              title: mmm[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-              image: markerImage, // 마커 이미지
+              map: map,
+              position: mmm[i].latlng,
+              title: mmm[i].title,
+              image: markerImage,
             });
           }
 
-          // 6. 지도 컨트롤 추가
           const mapTypeControl = new window.kakao.maps.MapTypeControl();
           map.addControl(
             mapTypeControl,
@@ -128,7 +141,6 @@ const Station = () => {
           const zoomControl = new window.kakao.maps.ZoomControl();
           map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
 
-          // 7. 원 그리기 (현재 위치 기준)
           const circle = new window.kakao.maps.Circle({
             center: new window.kakao.maps.LatLng(lat, lng),
             radius: 3000,
@@ -151,14 +163,13 @@ const Station = () => {
         setLoading(false);
       },
       {
-        enableHighAccuracy: true, // 높은 정확도
-        timeout: 10000, // 10초 타임아웃
-        maximumAge: 0, // 캐시 사용 안 함
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
       }
     );
-  }, [location?.latitude]);
+  }, [location?.latitude]); // ? 추가
 
-  // 로딩 중
   if (loading) {
     return (
       <MainContainer>
@@ -169,7 +180,6 @@ const Station = () => {
     );
   }
 
-  // 에러 발생
   if (error) {
     return (
       <MainContainer>
@@ -180,25 +190,33 @@ const Station = () => {
     );
   }
 
-  // 정상 렌더링
   return (
     <MainContainer>
       <LeftSection>
         <SearchWrapper>
           <SearchInput
             placeholder="궁금하신 내용을 입력하세요."
-            maxLength={50}
-            onChabge={(e) => searchStation(e.target.value)}
+            onChange={(e) => setSearchStation(e.target.value)}
           />
-          <SearchButton>🔍</SearchButton>
+          <SearchButton onClick={handleSearch}>🔍</SearchButton>
         </SearchWrapper>
-        <SearchResult></SearchResult>
+        <SearchResult>
+          <ol>
+            {searchResult &&
+              searchResult.map((item, index) => {
+                return (
+                  <li key={index}>
+                    <strong>{item.stationName}</strong>
+                    <div>{item.address}</div>
+                  </li>
+                );
+              })}
+          </ol>
+        </SearchResult>
       </LeftSection>
       <RightSection>
         <Map id="map"></Map>
-        {location && ( // location이 있을 때만 표시
-          <div></div>
-        )}
+        {location && <div></div>}
         <Review>
           <Recomend
             onClick={() => setIsRecomend(true)}
@@ -218,7 +236,6 @@ const Station = () => {
           />
         </Review>
 
-        {/* 페이징 버튼 */}
         <div>
           <button
             onClick={() => setCurrentPage(currentPage - 1)}
@@ -233,5 +250,4 @@ const Station = () => {
     </MainContainer>
   );
 };
-
 export default Station;
