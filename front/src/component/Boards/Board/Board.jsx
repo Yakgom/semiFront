@@ -21,7 +21,7 @@ import gasipan from "../../../assets/gasipan.png";
 
 const Board = () => {
   const [boards, setBoards] = useState([]);
-  const [page, setPage] = useState(0);          // 0부터 시작하는 페이지
+  const [page, setPage] = useState(0);          
   const [totalPages, setTotalPages] = useState(1);
 
   const [searchType, setSearchType] = useState("title");
@@ -29,7 +29,7 @@ const Board = () => {
 
   // 검색 모드 여부 + 검색 파라미터
   const [isSearchMode, setIsSearchMode] = useState(false);
-  const [searchParams, setSearchParams] = useState(null); // { type, keyword }
+  const [searchParams, setSearchParams] = useState(null); 
 
   const navi = useNavigate();
 
