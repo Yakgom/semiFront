@@ -20,10 +20,10 @@ import {
 import gasipan from "../../../assets/gasipan.png";
 
 const Board = () => {
-  const [boards, setBoards] = useState([]);
-  const [page, setPage] = useState(0);          
-  const [totalPages, setTotalPages] = useState(1);
+  const [boards, setBoards] = useState([]); 
+  const [page, setPage] = useState(0); 
 
+  const [totalPages, setTotalPages] = useState(1);
   const [searchType, setSearchType] = useState("title");
   const [keyword, setKeyword] = useState("");
 
@@ -267,7 +267,6 @@ const Board = () => {
           <option value="writer">작성자</option>
           <option value="content">내용</option>
         </SelectBox>
-
         <input
           type="text"
           placeholder="검색어 입력"
@@ -281,7 +280,6 @@ const Board = () => {
             borderRadius: "6px",
           }}
         />
-
         <button
           onClick={handleSearch}
           style={{
@@ -297,7 +295,6 @@ const Board = () => {
         >
           검색
         </button>
-
         {isSearchMode && (
           <button
             onClick={handleResetSearch}
