@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     accessToken: null,
     refreshToken: null,
     role: null,
+    provider: null,
     isAuthenticated: false,
   });
 
@@ -26,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     const birthDay = localStorage.getItem("birthDay");
     const refreshToken = localStorage.getItem("refreshToken");
     const accessToken = localStorage.getItem("accessToken");
-
+    const provider = localStorage.getItem("provider");
     if (
       accessToken &&
       refreshToken &&
@@ -47,6 +48,7 @@ export const AuthProvider = ({ children }) => {
         email,
         birthDay,
         accessToken,
+        provider: provider || null,
         refreshToken,
         isAuthenticated: true,
       });
@@ -62,7 +64,8 @@ export const AuthProvider = ({ children }) => {
     role,
     phone,
     email,
-    birthDay
+    birthDay,
+    provider
   ) => {
     setAuth({
       userNo,
@@ -74,6 +77,7 @@ export const AuthProvider = ({ children }) => {
       birthDay,
       accessToken,
       refreshToken,
+      provider: provider || null,
       isAuthenticated: true,
     });
     localStorage.setItem("userNo", userNo);
@@ -85,6 +89,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("birthDay", birthDay);
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("accessToken", accessToken);
+    if (provider) {
+      localStorage.setItem("provider", provider); // provider 값도 로컬스토리지에 저장
+    }
   };
 
   const logout = () => {
@@ -97,6 +104,7 @@ export const AuthProvider = ({ children }) => {
       birthDay: null,
       accessToken: null,
       refreshToken: null,
+      provider: null,
       role: null,
       isAuthenticated: false,
     });
@@ -109,6 +117,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("birthDay");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("provider");
     alert("로그아웃 되었습니다.");
     window.location.href = "/"; //
   };

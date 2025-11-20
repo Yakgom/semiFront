@@ -29,6 +29,7 @@ import UserDetail from "./component/Member/detail/UserDetail";
 import UserChangePwd from "./component/Member/detail/UserChangePwd";
 import UserDelete from "./component/Member/detail/UserDelete";
 import UserUpdate from "./component/Member/detail/UserUpdate";
+import NaverLoginCallback from "./component/Member/Login/NaverCallback";
 
 function App() {
   const location = useLocation();
@@ -59,6 +60,10 @@ function App() {
           element={<CarsReservationChange />}
         />
         <Route path="/reserves/detail" element={<CarsUsageHistory />} />
+        <Route
+          path="/members/naver/callback"
+          element={<NaverLoginCallback />}
+        />
         <Route path="/admin/*" element={<AdminHome />} />
         <Route path="/members/join" element={<Join />} />
         <Route path="/stations" element={<Station />} />
