@@ -19,6 +19,9 @@ import CarsReservationConfirm from "./component/Cars/CarsReservationConfirm";
 import CarsReservation from "./component/Cars/CarsReservationForm";
 import CarsReservationChange from "./component/Cars/CarsReservationChange";
 import CarsUsageHistory from "./component/Cars/CarsUsageHistory";
+
+import Station from "./component/Stations/Station";
+
 import Notice from "./component/Boards/Notice/Notice";
 import ImgBoardDetail from "./component/Boards/ImgBoard/ImgBoardDetail";
 import Login from "./component/Member/Login/Login";
@@ -60,15 +63,15 @@ function App() {
         <Route path="/reserves/detail" element={<CarsUsageHistory />} />
         <Route path="/admin/*" element={<AdminHome />} />
         <Route path="/members/join" element={<Join />} />
+        <Route path="/stations" element={<Station />} />
         <Route path="/members/login" element={<Login />} />
         <Route path="/members/detail" element={<UserDetail />} />
         <Route path="/members/detail/changePwd" element={<UserChangePwd />} />
-
           <Route path="/members/detail/delete" element={<UserDelete />} />
           <Route path="/members/detail/update" element={<UserUpdate />} />
         </Routes>
         {!isJoin && !isAdminPage && !isLogin && <Footer />}
-      </AuthProvider>
+
     </>
   );
 }
