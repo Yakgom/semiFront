@@ -33,6 +33,7 @@ function App() {
   const isAdminPage = location.pathname.startsWith("/admin");
   const isJoin = location.pathname.startsWith("/members/join");
   const isLogin = location.pathname.startsWith("/members/login");
+
   return (
     <>
       <AuthProvider>
@@ -63,7 +64,6 @@ function App() {
           <Route path="/members/login" element={<Login />} />
           <Route path="/members/detail" element={<UserDetail />} />
           <Route path="/members/detail/changePwd" element={<UserChangePwd />} />
-
           <Route path="/members/detail/delete" element={<UserDelete />} />
           <Route path="/members/detail/update" element={<UserUpdate />} />
         </Routes>

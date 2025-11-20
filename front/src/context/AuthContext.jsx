@@ -1,12 +1,12 @@
-import { useState, useInsertionEffect, createContext, useEffect } from "react";
+import { useState, createContext, useEffect } from "react";
 
 export const AuthContext = createContext();
-// 요 컨텍스트를 통해 인증관련 데이터를 하위 컴포넌트에 전달함
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     userNo: null,
     userName: null,
+    userId: null,
     phone: null,
     email: null,
     birthDay: null,
@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const userNo = localStorage.getItem("userNo");
     const userName = localStorage.getItem("userName");
+    const userId = localStorage.getItem("userId");
     const role = localStorage.getItem("role");
     const phone = localStorage.getItem("phone");
     const email = localStorage.getItem("email");
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
       refreshToken &&
       userNo &&
       userName &&
+      userId &&
       role &&
       phone &&
       email &&
@@ -39,6 +41,7 @@ export const AuthProvider = ({ children }) => {
       setAuth({
         userNo,
         userName,
+        userId,
         role,
         phone,
         email,
@@ -50,7 +53,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // 로그인에 성공했을 때 수행할 함수
   const login = (
     accessToken,
     refreshToken,
@@ -84,6 +86,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("accessToken", accessToken);
   };
+
   const logout = () => {
     setAuth({
       userNo: null,
@@ -107,8 +110,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("accessToken");
     alert("로그아웃 되었습니다.");
-    window.localStorage.href = "/";
+    window.location.href = "/"; //
   };
+
   return (
     <AuthContext.Provider value={{ auth, login, logout }}>
       {children}
