@@ -71,7 +71,7 @@ function App() {
           <Route path="/members/detail/update" element={<UserUpdate />} />
         </Routes>
         {!isJoin && !isAdminPage && !isLogin && <Footer />}
-
+        </AuthProvider>
     </>
   );
 }
