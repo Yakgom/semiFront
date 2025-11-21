@@ -171,3 +171,100 @@ export const Title = styled.h2`
   color: #333333;
   margin-bottom: 70px;
 `;
+
+export const BottomArea = styled.div`
+  margin-top: 40px;
+`;
+
+// 상단 [목록보기 / 신고하기]  |  [삭제 / 수정] 라인
+export const TopButtonRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  & > div button + button {
+    margin-left: 8px;
+  }
+`;
+
+// 댓글 전체 영역 박스
+export const CommentArea = styled.div`
+  border: 1px solid #d5d5d5;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+`;
+
+// "댓글쓰기" 라벨
+export const CommentWriteTitle = styled.div`
+  font-weight: 600;
+  margin-bottom: 8px;
+`;
+
+// 댓글 입력 textarea
+export const CommentInput = styled.textarea`
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 10px;
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+  resize: vertical;
+  font-size: 14px;
+  box-sizing: border-box;
+`;
+
+// 로그인 안 했을 때 비활성 input 느낌
+export const CommentDisabledBox = styled.div`
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background: #f0f0f0;
+  color: #777;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+`;
+
+// "작성하기" 버튼 라인
+export const CommentWriteButtonRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+`;
+
+// 댓글 리스트를 위한 테이블
+export const CommentTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 14px;
+`;
+
+export const CommentHeadCell = styled.th`
+  padding: 6px 4px;
+  border-top: 1px solid #d5d5d5;
+  border-bottom: 1px solid #d5d5d5;
+  text-align: left;
+`;
+
+export const CommentCell = styled.td`
+  padding: 6px 4px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+`;
+
+// "수정 삭제", "댓글신고" 같은 작은 텍스트 버튼
+export const CommentActionButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0 4px;
+  cursor: pointer;
+  font-size: 13px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
