@@ -31,7 +31,7 @@ const CarsDetail = () => {
   const [car, setCar] = useState(null);
   const [load, isLoad] = useState(false);
   const reviews = null;
- 
+
   useEffect(() => {
     axios
       .get(`http://localhost:8081/cars/${carId}`)
@@ -43,10 +43,10 @@ const CarsDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  },[carId]);
+  }, [carId]);
 
 
-  if(car == null) return <div>빠이</div>;
+  if (car == null) return <div>빠이</div>;
   return (
     <>
       <SideBar />
@@ -55,7 +55,13 @@ const CarsDetail = () => {
           <CardTitle>차량 상세보기</CardTitle>
 
           <CarImageArea>
-            <CarModel>{car?.carImage}</CarModel>
+
+              {car.carImage ? (
+                <img src={car.carImage} alt="차량 이미지" style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover' }} />
+              ) : (
+                "이미지 없음"
+              )}
+
           </CarImageArea>
 
           <InfoSection>

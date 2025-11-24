@@ -58,10 +58,10 @@ function App() {
           element={<CarsReservationConfirm />}
         />
         <Route
-          path="/reserves/searchList"
+          path="/cars/reserves/searchList"
           element={<CarsReservationChange />}
         />
-        <Route path="/reserves/detail" element={<CarsUsageHistory />} />
+        <Route path="/cars/reserves/detail" element={<CarsUsageHistory />} />
         <Route path="/admin/*" element={<AdminHome />} />
         <Route path="/members/join" element={<Join />} />
         <Route path="/members/kakaoJoin" element={<KakaoJoin />} />
