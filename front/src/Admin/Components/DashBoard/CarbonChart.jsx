@@ -8,7 +8,7 @@ ChartJS.register(PointElement, LineElement, Filler);
 const Card = styled.div`
   background: white;
   border-radius: 15px;
-  padding: 20px;
+  padding: 20px;  
   flex: 2;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 `;

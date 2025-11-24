@@ -11,7 +11,6 @@ import {
 import { Bar } from "react-chartjs-2";
 import { ChartContainer, ChartTitle } from "./CarsStatsBarChart.styles";
 
-// Chart.js 구성 요소 등록 (파일 상단 또는 별도 파일에서 한 번만 수행)
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,7 +21,6 @@ ChartJS.register(
 );
 
 const CarsStatsBarChart = () => {
-  // 1. 차트 옵션 설정
   const options = {
     responsive: true,
     plugins: {

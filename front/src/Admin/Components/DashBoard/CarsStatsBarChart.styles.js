@@ -12,7 +12,7 @@ export const ChartContainer = styled.div`
 `;
 
 export const ChartTitle = styled.h2`
-  font-size: 1.5em;
+  font-size: 1.5em;  
   color: #3f51b5;
   margin-bottom: 25px;
   text-align: center;
