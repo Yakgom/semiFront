@@ -20,7 +20,7 @@ const ImgBoardDetail = () => {
   const { id } = useParams();
   const navi = useNavigate();
 
-  const [board, setBoard] = useState(null);
+  const [imgBoard, setImgBoard] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const { auth } = useContext(AuthContext);
@@ -29,13 +29,13 @@ const ImgBoardDetail = () => {
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
-  // ✅ 상세 글 불러오기 (로그인 안 해도 가능)
+  // 글 불러오기 (로그인 안 해도 가능)
   useEffect(() => {
     axios
       .get(`http://localhost:8081/boards/imgBoards/${id}`)
       .then((res) => {
         const data = res.data;
-        setBoard(data);
+        setImgBoard(data);
         // 백엔드 DTO 필드명에 맞게 세팅
         setEditTitle(data.imgBoardTitle);
         setEditContent(data.imgBoardContent);
@@ -50,7 +50,7 @@ const ImgBoardDetail = () => {
       });
   }, [id, navi]);
 
-  // ✅ 삭제
+  // 삭제
   const handleDelete = () => {
     if (!auth?.accessToken) {
       alert("로그인이 필요합니다.");
@@ -74,7 +74,7 @@ const ImgBoardDetail = () => {
       });
   };
 
-  // ✅ 수정
+  // 수정
   const handleUpdate = () => {
     if (!auth?.accessToken) {
       alert("로그인이 필요합니다.");
@@ -100,8 +100,8 @@ const ImgBoardDetail = () => {
       )
       .then((res) => {
         alert("수정되었습니다!");
-        const data = res.data || board;
-        setBoard({
+        const data = res.data || imgBoard;
+        setImgBoard({
           ...data,
           imgBoardTitle: editTitle,
           imgBoardContent: editContent,
@@ -115,11 +115,11 @@ const ImgBoardDetail = () => {
   };
 
   if (loading) return <div>로딩 중...</div>;
-  if (!board) return <div>게시글을 찾을 수 없습니다. 관리자에게 문의하세요.</div>;
+  if (!imgBoard) return <div>게시글을 찾을 수 없습니다. 관리자에게 문의하세요.</div>;
 
   // 작성자 본인인지 체크 (백엔드에서 imgBoardWriter 라고 내려온다고 가정)
   const isWriter =
-    auth?.userId && board.imgBoardWriter && board.imgBoardWriter === auth.userId;
+    auth?.userId && imgBoard.imgBoardWriter && imgBoard.imgBoardWriter === auth.userId;
 
   return (
     <Container>
@@ -141,7 +141,7 @@ const ImgBoardDetail = () => {
               boxSizing: "border-box",
             }}
           />
-          <BoardWriter>작성자 : {board.imgBoardWriter}</BoardWriter>
+          <BoardWriter>작성자 : {imgBoard.imgBoardWriter}</BoardWriter>
           <textarea
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
@@ -158,24 +158,32 @@ const ImgBoardDetail = () => {
         </>
       ) : (
         <>
-          <Title>{board.imgBoardTitle}</Title>
+          <Title>{imgBoard.imgBoardTitle}</Title>
           <BoardWriter>
-            <span>작성자 : {board.imgBoardWriter}</span>
-            <span>작성일 : {board.imgBoardDate}</span>
-            <span>조회 : {board.imgCount}</span>
+            <span>작성자 : {imgBoard.imgBoardWriter}</span>
+            <span>작성일 : {imgBoard.imgBoardDate}</span>
+            <span>조회 : {imgBoard.imgCount}</span>
           </BoardWriter>
           <hr />
-          {/* ✅ 이미지 상세에서만 보여주기 (필드명은 백엔드에 맞게) */}
-          {board.imageUrl && (
+          {/* 이미지 상세에서만 보여주기 (필드명은 백엔드에 맞게) */}
+          {imgBoard.attachments && imgBoard.attachments.length > 0 && (
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
-              <img
-                src={board.imageUrl}
-                alt={board.imgBoardTitle}
-                style={{ maxWidth: "100%", borderRadius: "8px" }}
-              />
+              {imgBoard.attachments.map((att) => (
+                <img
+                  key={att.fileNo}
+                  src={att.filePath}   // filePath에 전체 URL 또는 상대 경로가 들어있다고 가정
+                  alt={att.originName}
+                  style={{
+                    maxWidth: "100%",
+                    borderRadius: "8px",
+                    marginBottom: "10px",
+                    display: "block",
+                  }}
+                />
+              ))}
             </div>
           )}
-          <BoardContent>{board.imgBoardContent}</BoardContent>
+          <BoardContent>{imgBoard.imgBoardContent}</BoardContent>
           <hr />
         </>
       )}
@@ -202,8 +210,8 @@ const ImgBoardDetail = () => {
                   <Button
                     onClick={() => {
                       setEditMode(false);
-                      setEditTitle(board.imgBoardTitle);
-                      setEditContent(board.imgBoardContent);
+                      setEditTitle(imgBoard.imgBoardTitle);
+                      setEditContent(imgBoard.imgBoardContent);
                     }}
                     style={{ background: "gray", marginLeft: "8px" }}
                   >
@@ -232,7 +240,7 @@ const ImgBoardDetail = () => {
         </TopButtonRow>
 
         {/*  댓글 쪽도 imgBoardNo 기준으로 넘겨주기 */}
-        <ImgBoardComment boardNo={board.imgBoardNo || id} />
+        <ImgBoardComment imgBoardNo={imgBoard.imgBoardNo || id} />
       </BottomArea>
     </Container>
   );
