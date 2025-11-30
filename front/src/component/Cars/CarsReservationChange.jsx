@@ -15,6 +15,7 @@ import {
   CancelButton
 } from "../Cars/CarsReservationChange.style"
 import SideBar from "../Common/Sidebar/Sidebar";
+import ReservationChangeModal from './ReservationChangeModal'; // 모달 import 추가
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -24,6 +25,8 @@ const CarsReservationChange = () => {
   const [refresh, setRefresh] = useState(0);
   const navi = useNavigate();
   const { auth } = useContext(AuthContext);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState(null);
 
   const handleReturn = () => {
     if (!confirm("반납을 취소하시겠습니까?")) return;
@@ -34,6 +37,7 @@ const CarsReservationChange = () => {
       .then((result) => {
         console.log(result);
         alert("반납 처리가 완료되었습니다.")
+        setRefresh(prev => prev + 1);
       })
       .catch((err) => {
         console.log(err);
@@ -44,31 +48,34 @@ const CarsReservationChange = () => {
   const handleCancel = (reservationNo) => {
     if (!confirm("예약을 취소하시겠습니까?")) return;
     axios
-      .delete("http://localhost:8081/reserve",
+      .delete(
+        `http://localhost:8081/reserve/${reservationNo}`,
         {
-          reservationNo:"reservationNo"
-        },
-        { headers: { Authorization: `Bearer ${auth.accessToken}` } }
+          headers: { Authorization: `Bearer ${auth.accessToken}` }
+        }
       )
       .then((result) => {
         console.log(result);
-        alert("예약취소가 완료되었습니다.")
+        alert(result);
         setRefresh(prev => prev + 1);
       })
       .catch((err) => {
         console.log(err);
-        alert("예약취소를 실패했습니다.")
+        alert(err);
       })
   }
 
-  const handleChange = () => {
+  const handleChange = (updatedData) => {
     axios
       .put("http://localhost:8081/reserve/change",
+        updatedData, 
         { headers: { Authorization: `Bearer ${auth.accessToken}` } }
       )
       .then((result) => {
         console.log(result);
         alert("예약변경을 성공했습니다.")
+        setModalOpen(false); 
+        setRefresh(prev => prev + 1);
       })
       .catch((err) => {
         console.log(err);
@@ -90,12 +97,9 @@ const CarsReservationChange = () => {
       });
   }, [auth.accessToken, refresh]);
 
-
-
   if (!auth.accessToken) return <div>빠이</div>;
   return (
     <>
-
       <SideBar />
       <MainContainer>
         <PageTitle>예약 내역</PageTitle>
@@ -142,8 +146,11 @@ const CarsReservationChange = () => {
                         <ReturnButton>반납하기</ReturnButton>
                       ) : (
                         <>
-                          <ModifyButton onClick={() => setModalOpen(true)}>
-                            <ModifyButton>예약 변경 하기</ModifyButton>
+                          <ModifyButton onClick={() => {
+                            setSelectedReservation(item.reservation);
+                            setModalOpen(true);
+                          }}>
+                            예약 변경 하기
                           </ModifyButton>
                           <CancelButton
                             onClick={() => handleCancel(item.reservation?.reservationNo)}
@@ -160,6 +167,12 @@ const CarsReservationChange = () => {
           )}
         </ReservationList>
 
+        <ReservationChangeModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          reservation={selectedReservation}
+          onConfirm={handleChange}
+        />
       </MainContainer>
     </>
   );
