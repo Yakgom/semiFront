@@ -1,9 +1,11 @@
 import {
   Comment,
+  Elision,
   LeftSection,
   MainContainer,
   Map,
   Recomend,
+  Registration,
   Review,
   RightSection,
   SearchButton,
@@ -13,6 +15,7 @@ import {
 } from "./Station.style";
 import { useEffect, useState } from "react"; // 이 줄이 있는지 확인!
 import axios from "axios";
+import { DetailButton } from "../Cars/CarsSearchList.style";
 
 const Station = () => {
   // ===========================
@@ -27,6 +30,9 @@ const Station = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchResult, setSearchResult] = useState([]);
   const [stationId, setStationId] = useState(null);
+  const [comment, setComment] = useState("");
+  const [reviewId, setReviewId] = useState(null);
+  const [refresh, setRefresh] = useState([]);
 
   const reviewsPerPage = 5;
   const indexOfLast = currentPage * reviewsPerPage;
@@ -42,7 +48,7 @@ const Station = () => {
       alert("검색어를 입력하세요!");
       return;
     }
-
+    document.querySelector("#searchResult").style.background = "none";
     axios
       .get("http://localhost:8081/station/search", {
         params: { keyword: keyword },
@@ -65,19 +71,50 @@ const Station = () => {
         console.error("검색실패:", error);
       });
   };
+  // setReviewId()
+  const register = () => {
+    axios
+      .post("http://localhost:8081/station/insert", {
+        stationId: stationId,
+        commentContent: comment,
+        isRecomend: isRecomend,
+      })
+      .then((response) => {
+        const result = response.data;
+        console.log(result);
+        setIsRecomend(null);
+        setComment("");
+      });
+  };
 
-  // axios.post("http://localhost:8081/station/insert", {
-  //   params: {},
-  // });
+  const elision = (reviewId) => {
+    console.log(reviewId);
+    axios
+      .delete("http://localhost:8081/station", {
+        data: { reviewId: reviewId }, // data 객체로 감싸기
+      })
+      .then((response) => {
+        alert(response.data);
+        findAll();
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
-  // ===========================
+  const findAll = () => {
+    console.log(stationId);
+    axios
+      .get(`http://localhost:8081/station/findAll?stationId=${stationId}`)
+      .then((response) => {
+        console.log(response);
+        setRefresh(response.data);
+      });
+  };
   // 3. 위치 정보 + 지도 + 마커 세팅 (useEffect)
-  // ===========================
   useEffect(() => {
     // 이 부분 추가!
-    console.log(location);
     setLoading(false);
-
     if (!window.kakao || !window.kakao.maps) {
       setError("카카오 맵 API를 로드할 수 없습니다.");
       setLoading(false);
@@ -178,8 +215,6 @@ const Station = () => {
             fillOpacity: 0.3,
           });
           circle.setMap(map);
-
-          setLoading(false);
         };
 
         fn1();
@@ -196,9 +231,8 @@ const Station = () => {
     );
   }, [location?.latitude]); // ? 추가
 
-  // ===========================
   // 4. 로딩 / 에러 화면 처리
-  // ===========================
+
   if (loading) {
     return (
       <MainContainer>
@@ -230,12 +264,11 @@ const Station = () => {
           <SearchInput
             placeholder="궁금하신 내용을 입력하세요."
             maxLength={50}
-            onChange={(e) => setSearchResult(e.target.value)}
+            onChange={(e) => setSearchStation(e.target.value)}
           />
           <SearchButton onClick={handleSearch}>🔍</SearchButton>
         </SearchWrapper>
-
-        <SearchResult>
+        <SearchResult id="searchResult">
           <ol>
             {searchResult &&
               searchResult.map((item, index) => {
@@ -249,11 +282,48 @@ const Station = () => {
           </ol>
         </SearchResult>
       </LeftSection>
-
       {/* 오른쪽 : 지도 + 리뷰 + 페이지네이션 */}
       <RightSection>
         <Map id="map"></Map>
         {location && <div></div>}
+
+        <DetailButton
+          onClick={findAll}
+          style={{ marginTop: "5%", width: "10%" }}
+        >
+          조회하기
+        </DetailButton>
+
+        {refresh.map((e) => (
+          <li
+            key={e.reviewId}
+            style={{
+              display: "flex",
+              gap: "20px",
+              listStylePosition: "inside", // 또는 아래 방법들 참고
+              marginTop: "20px",
+            }}
+          >
+            <div style={{ flex: "0.5", textAlign: "center" }}>
+              <p
+                style={{
+                  background: e.recommend === "추천" ? "#1abfb1" : "#992b2b",
+                }}
+              >
+                {e.recommend}
+              </p>
+            </div>
+            <div style={{ flex: "4" }}>
+              <p> {e.commentContent}</p>
+            </div>
+            <div style={{ flex: "4" }}>
+              <p> 작성일:{e.createdAt}</p>
+            </div>
+            <div style={{ flex: "3" }}>
+              <Elision onClick={() => elision(e.reviewId)}>삭제</Elision>
+            </div>
+          </li>
+        ))}
 
         <Review>
           <Recomend
@@ -269,21 +339,13 @@ const Station = () => {
             비추천
           </Recomend>
           <Comment
+            value={comment}
             placeholder="    남기고 싶은 리뷰를 입력하세요."
             maxLength={80}
+            onChange={(e) => setComment(e.target.value)}
           />
+          <Registration onClick={register}>등록</Registration>
         </Review>
-
-        <div>
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            이전
-          </button>
-          <span> {currentPage} </span>
-          <button onClick={() => setCurrentPage(currentPage + 1)}>다음</button>
-        </div>
       </RightSection>
     </MainContainer>
   );
