@@ -33,11 +33,7 @@ const Station = () => {
   const [comment, setComment] = useState("");
   const [reviewId, setReviewId] = useState(null);
   const [refresh, setRefresh] = useState([]);
-
-  const reviewsPerPage = 5;
-  const indexOfLast = currentPage * reviewsPerPage;
-  const indexOfFirst = indexOfLast - reviewsPerPage;
-
+  const [stationName, setStationName] = useState("");
   // ===========================
   // 2. 검색 관련 함수
   // ===========================
@@ -82,14 +78,37 @@ const Station = () => {
     axios
       .get(`http://localhost:8081/station/searchDetail/${stationId}`)
       .then((res) => {
-        console.log(res);
+        const station = res.data[0]; // 배열 안 첫 번째 객체
+        const {
+          address,
+          detailAddress,
+          regDate,
+          stationId,
+          stationName,
+          tel,
+          useTime,
+        } = station;
+        alert(
+          "주소:" +
+            address +
+            "\n상세주소:" +
+            detailAddress +
+            "\n등록일자:" +
+            regDate +
+            "\n충전소ID:" +
+            stationId +
+            "\n충전소 이름:" +
+            stationName +
+            "\n연락처:" +
+            tel +
+            "\n이용시간:" +
+            useTime
+        );
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  // setReviewId()
   const register = () => {
     axios
       .post("http://localhost:8081/station/insert", {
@@ -205,10 +224,15 @@ const Station = () => {
               title: item.title,
               image: markerImage,
             });
+
             kakao.maps.event.addListener(marker, "click", () => {
               const selectedId = item.stationId; // 이 마커에 해당하는
+              const selectedName = item.title;
+
               setStationId(selectedId);
-              setStationName(item.title);
+
+              setStationName(selectedName);
+
               fn1(selectedId); // 선택한 ID 들고 fn1 다시 호출
             });
           }
@@ -308,7 +332,9 @@ const Station = () => {
       <RightSection>
         <Map id="map"></Map>
         {location && <div></div>}
-        <div>선택된 충전소 이름 : {stationId}</div>
+        <div style={{ marginTop: "15px" }}>
+          선택된 충전소 이름 : {stationName}
+        </div>
         <DetailButton
           onClick={findAll}
           style={{ marginTop: "5%", width: "10%" }}
@@ -342,7 +368,12 @@ const Station = () => {
               <p> 작성일:{e.createdAt}</p>
             </div>
             <div style={{ flex: "3" }}>
-              <Elision onClick={() => elision(e.reviewId)}>삭제</Elision>
+              <Elision
+                onClick={() => elision(e.reviewId)}
+                style={{ marginTop: "0px" }}
+              >
+                삭제
+              </Elision>
             </div>
           </li>
         ))}
