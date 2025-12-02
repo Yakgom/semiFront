@@ -67,7 +67,9 @@ const CarsDetail = () => {
 
   // 리뷰 수정하기
 
+  
   // 리뷰 삭제하기
+
 
   if (car == null) return <div>빠이</div>;
 
