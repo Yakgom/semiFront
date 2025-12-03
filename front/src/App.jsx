@@ -29,6 +29,7 @@ import NaverLoginCallback from "./component/Member/Login/NaverCallback";
 import KakaoLoginCallback from "./component/Member/Login/KakaoCallback";
 import KakaoJoin from "./component/Member/Join/KakaoJoin";
 import CarsReviewForm from "./component/Cars/CarsReviewForm";
+import NoticeDetail from "./component/Boards/Notice/NoticeDetail";
 function App() {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
@@ -41,6 +42,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/boards/boards" element={<Board />} />
         <Route path="/boards/notices" element={<Notice />} />
+        <Route path="/boards/notices/:id" element={<NoticeDetail />} />
         <Route path="/boards/boards/write" element={<BoardForm />} />
         <Route path="/boards/boards/:id" element={<BoardDetail />} />
         <Route path="/boards/imgBoards" element={<ImgBoard />} />
