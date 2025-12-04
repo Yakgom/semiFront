@@ -156,7 +156,7 @@ const CarsEdit = () => {
     }
 
     axios
-      .post(`http://localhost:8081/admin/api/settings/update`, formData, {
+      .put(`http://localhost:8081/admin/api/settings/update`, formData, {
         headers: {
           Authorization: `Bearer ${auth.accessToken}`,
           "Content-Type": "multipart/form-data",
