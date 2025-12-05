@@ -8,9 +8,15 @@
 
 **함께 나누는 친환경 모빌리티로 지구를 지키고 더 나은 미래를 만들어가세요**
 
-[기능 소개](#-주요-기능) • [시작하기](#-시작하기) • [기술 스택](#-기술-스택) • [프로젝트 구조](#-프로젝트-구조)
+[기능 소개](#-주요-기능) • [시작하기](#-시작하기) • [기술 스택](#-기술-스택) • [프로젝트 구조](#-프로젝트-구조) • [시연 영상](#-시연-영상)
 
 </div>
+
+---
+
+## 💡 한 줄 소개
+
+**전기차를 공유하고 빌릴 수 있는 커뮤니티 기반 플랫폼으로, 회원들 간의 차량 공유를 통해 친환경 모빌리티 문화를 만들어갑니다.**
 
 ---
 
@@ -27,56 +33,41 @@
 
 ## ✨ 주요 기능
 
-### 👤 사용자 기능
-- **회원 관리**
-  - 일반 회원가입 및 소셜 로그인 (카카오, 네이버)
-  - 프로필 관리 및 비밀번호 변경
-  - 회원 탈퇴
+### 👤 팀원별 담당 기능
 
-- **차량 예약**
-  - 차량 검색 및 상세 정보 조회
-  - 차량 예약 및 예약 확인
-  - 예약 변경 및 취소
-  - 예약 내역 조회
+#### 팀원 1: 회원 관리 및 인증 시스템
+- 일반 회원가입 및 로그인 기능 구현
+- 소셜 로그인 연동 (카카오, 네이버)
+- JWT 토큰 기반 인증 처리
+- 회원 정보 관리 (프로필 수정, 비밀번호 변경, 회원 탈퇴)
+- AuthContext를 통한 전역 인증 상태 관리
 
-- **리뷰 시스템**
-  - 차량 이용 후 리뷰 작성
-  - 리뷰 수정 및 삭제
+#### 팀원 2: 차량 예약 시스템
+- 차량 검색 및 목록 조회 기능
+- 차량 상세 정보 페이지 구현
+- 차량 예약 및 예약 확인 기능
+- 예약 변경 및 취소 기능
+- 예약 내역 조회 및 관리
 
-- **커뮤니티**
-  - 자유 게시판 (글 작성, 수정, 삭제, 댓글)
-  - 이미지 게시판
-  - 공지사항 조회
+#### 팀원 3: 리뷰 및 커뮤니티 시스템
+- 차량 이용 후 리뷰 작성/수정/삭제 기능
+- 자유 게시판 CRUD 기능 구현
+- 이미지 게시판 기능 구현
+- 댓글 시스템 구현
+- 게시글 신고 기능
 
-- **충전소 정보**
-  - 충전소 검색 및 상세 정보 조회
-  - 내가 저장한 충전소 관리
+#### 팀원 4: 관리자 대시보드 및 관리 기능
+- 관리자 대시보드 구현 (Chart.js 활용)
+- 회원 통계 및 트렌드 분석 차트
+- 차량 통계 및 일일 예약 현황 시각화
+- 차량 관리 (등록, 수정, 삭제)
+- 회원 관리 및 커뮤니티 신고 처리
 
-### 🔐 관리자 기능
-- **대시보드**
-  - 회원 통계 및 트렌드 분석
-  - 차량 통계 및 일일 예약 현황
-  - 면허증 발급 트렌드 분석
-  - KPI 지표 모니터링
-
-- **차량 관리**
-  - 차량 등록, 수정, 삭제
-  - 차량 목록 조회 및 검색
-  - 차량 예약 관리
-
-- **회원 관리**
-  - 회원 목록 조회 및 검색
-  - 회원 정보 수정
-  - 회원 삭제
-
-- **커뮤니티 관리**
-  - 게시글 신고 처리
-  - 댓글 신고 처리
-  - 공지사항 작성, 수정, 삭제
-
-- **환경 관리**
-  - 사용자 랭킹 조회
-  - 데이터 시각화
+#### 팀원 5: 충전소 및 공지사항 시스템
+- 충전소 검색 및 상세 정보 조회
+- 내가 저장한 충전소 관리 기능
+- 공지사항 조회 및 상세 페이지
+- 관리자 공지사항 작성/수정/삭제 기능
 
 ---
 
@@ -119,16 +110,7 @@ cd react/front
 npm install
 ```
 
-3. **환경 변수 설정**
-프로젝트 루트에 `.env` 파일을 생성하고 다음 내용을 추가하세요:
-```env
-VITE_API_BASE_URL=http://localhost:8081
-VITE_KAKAO_CLIENT_ID=your_kakao_client_id
-VITE_NAVER_CLIENT_ID=your_naver_client_id
-VITE_REDIRECT_URI=http://localhost:5173
-```
-
-4. **개발 서버 실행**
+3. **개발 서버 실행**
 ```bash
 npm run dev
 ```
@@ -137,15 +119,6 @@ npm run dev
 ```
 http://localhost:5173
 ```
-
-### 빌드
-```bash
-npm run build
-```
-
-### 프로덕션 미리보기
-```bash
-npm run preview
 ```
 
 ---
@@ -250,23 +223,161 @@ front/
 
 ---
 
-## 🐛 알려진 이슈
+## 🎬 시연 영상
 
-- API URL이 하드코딩되어 있습니다 (환경 변수로 전환 필요)
-- 일부 컴포넌트에서 console.log가 남아있습니다
-- ProtectedRoute에서 authLoading 상태가 정의되지 않았습니다
+### 시연 화면 (GIF)
+
+<div align="center">
+
+![시연 화면 1](https://via.placeholder.com/800x450?text=Share+EV+Demo+GIF)
+*메인 페이지 및 차량 예약 시연*
+
+![시연 화면 2](https://via.placeholder.com/800x450?text=Admin+Dashboard+Demo)
+*관리자 대시보드 시연*
+
+</div>
+
+### 시연 영상 (YouTube)
+
+프로젝트 전체 시연 영상을 확인하실 수 있습니다.
+
+[![시연 영상](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
+
+> 📌 **참고**: 위 링크는 예시입니다. 실제 유튜브 영상 링크로 교체해주세요.
+
+---
+
+## 🐛 트러블슈팅
+
+### 1. Axios 인터셉터 문법 오류
+**문제**: `instance.interceptors.response.use` 뒤에 괄호가 누락되어 문법 오류 발생
+```javascript
+// ❌ 문제 코드
+instance.interceptors.response.use
+  (response) => response,
+  (error) => { ... }
+```
+
+**해결**: 괄호를 추가하여 올바른 함수 호출 형태로 수정
+```javascript
+// ✅ 해결 코드
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => { ... }
+);
+```
+
+### 2. API 인스턴스 중복 문제
+**문제**: `api/instance.js`와 `component/Boards/api.jsx`에 두 개의 axios 인스턴스가 존재하여 코드 중복 발생
+
+**해결**: 공통 인스턴스를 `api/instance.js`로 통일하고, 모든 컴포넌트에서 이를 import하여 사용하도록 리팩토링
+
+### 3. ProtectedRoute의 authLoading 상태 오류
+**문제**: `AuthContext`에 `authLoading` 상태가 정의되지 않았는데 `ProtectedRoute`에서 사용
+
+**해결**: `AuthContext`에 `authLoading` 상태를 추가하거나, 조건부 렌더링 로직을 수정하여 인증 상태 확인 후 라우팅 처리
+
+### 4. 하드코딩된 API URL
+**문제**: 61개 파일에 `http://localhost:8081`이 하드코딩되어 있어 환경별 설정 변경이 어려움
+
+**해결**: 환경 변수(`.env`)를 사용하여 API URL을 관리하도록 변경
+```javascript
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8081';
+```
+
+### 5. 소셜 로그인 클라이언트 ID 노출
+**문제**: 카카오, 네이버 클라이언트 ID가 코드에 직접 노출
+
+**해결**: 환경 변수로 관리하여 보안 강화
+```javascript
+const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
+```
+
+### 6. CORS 에러 처리
+**문제**: 백엔드와 프론트엔드가 다른 포트에서 실행되어 CORS 에러 발생
+
+**해결**: Vite의 프록시 설정을 활용하여 개발 환경에서 CORS 문제 해결
+```javascript
+// vite.config.js
+server: {
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8081',
+      changeOrigin: true,
+    }
+  }
+}
+```
+
+---
+
+## 💡 프로젝트를 통해 얻은 것
+
+### 기술적 성장
+- **React Hooks 활용**: useState, useEffect, useContext 등을 활용한 상태 관리 및 생명주기 관리
+- **Context API**: 전역 상태 관리 패턴 학습 및 적용
+- **React Router**: SPA 라우팅 구현 및 보호된 라우트 구현 경험
+- **Styled Components**: CSS-in-JS를 통한 컴포넌트 기반 스타일링
+- **Chart.js**: 데이터 시각화 및 대시보드 구현 경험
+- **Axios**: HTTP 클라이언트를 통한 RESTful API 연동
+
+### 협업 및 프로젝트 관리
+- **Git/GitHub**: 버전 관리 및 협업 워크플로우 학습
+- **컴포넌트 설계**: 재사용 가능한 컴포넌트 설계 및 구조화
+- **코드 리뷰**: 팀원 간 코드 리뷰를 통한 코드 품질 향상
+- **이슈 관리**: 프로젝트 이슈 추적 및 해결 과정 경험
+
+### 문제 해결 능력
+- **디버깅**: 브라우저 개발자 도구를 활용한 문제 진단 및 해결
+- **에러 처리**: 다양한 에러 상황에 대한 적절한 처리 방법 학습
+- **성능 최적화**: 불필요한 리렌더링 방지 및 최적화 기법 적용
+
+---
+
+## 🔮 개선사항
+
+### 단기 개선사항
+- [ ] 환경 변수를 통한 API URL 및 소셜 로그인 키 관리
+- [ ] API 인스턴스 통합 및 중복 코드 제거
+- [ ] console.log 제거 및 로깅 라이브러리 도입
+- [ ] ProtectedRoute의 authLoading 상태 처리
+- [ ] 주석 처리된 코드 정리
+- [ ] 에러 처리 통일 및 사용자 친화적 에러 메시지 개선
+
+### 중기 개선사항
+- [ ] TypeScript 도입을 통한 타입 안정성 확보
+- [ ] 테스트 코드 작성 (Jest, React Testing Library)
+- [ ] 로딩 상태 및 스켈레톤 UI 구현
+- [ ] 반응형 디자인 개선
+- [ ] 접근성(A11y) 개선
+- [ ] 성능 최적화 (코드 스플리팅, lazy loading)
+
+### 장기 개선사항
+- [ ] PWA(Progressive Web App) 기능 추가
+- [ ] 실시간 알림 기능 (WebSocket)
+- [ ] 다국어 지원 (i18n)
+- [ ] 다크 모드 지원
+- [ ] 모바일 앱 개발 (React Native)
+
+---
+
+## 👥 팀원 정보
+
+| 이름 | 역할 | 담당 기능 | GitHub |
+|------|------|----------|--------|
+| 팀원 1 | Frontend Developer | 회원 관리 및 인증 시스템 | [@username1](https://github.com/username1) |
+| 팀원 2 | Frontend Developer | 차량 예약 시스템 | [@username2](https://github.com/username2) |
+| 팀원 3 | Frontend Developer | 리뷰 및 커뮤니티 시스템 | [@username3](https://github.com/username3) |
+| 팀원 4 | Frontend Developer | 관리자 대시보드 및 관리 기능 | [@username4](https://github.com/username4) |
+| 팀원 5 | Frontend Developer | 충전소 및 공지사항 시스템 | [@username5](https://github.com/username5) |
+
+> 📌 **참고**: 위 정보는 예시입니다. 실제 팀원 정보로 교체해주세요.
 
 ---
 
 ## 📄 라이선스
 
 이 프로젝트는 교육 목적으로 제작되었습니다.
-
----
-
-## 👥 기여자
-
-프로젝트에 기여해주신 모든 분들께 감사드립니다.
 
 ---
 
