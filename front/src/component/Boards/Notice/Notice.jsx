@@ -34,7 +34,7 @@ const Notice = () => {
 
   // 공지사항 목록(전체 조회 or 검색 결과) 로딩
   const loadNotices = () => {
-    const baseUrl = "/boards/notices";   // ✅ baseURL은 Api.js에서
+    const baseUrl = "/notices";
 
     // 검색 모드일 때는 /search 호출, 아니면 전체 조회
     const url = isSearchMode ? `${baseUrl}/search` : baseUrl;
@@ -67,7 +67,7 @@ const Notice = () => {
 
   // 상세보기
   const handleView = (id) => {
-    navi(`/boards/notices/${id}`);
+    navi(`/notices/${id}`);
   };
 
   // 검색 기능
@@ -97,11 +97,11 @@ const Notice = () => {
 
       {/* 탭 메뉴 */}
       <TabMenu>
-        <Tab $active onClick={() => navi("/boards/notices")}>
+        <Tab $active onClick={() => navi("/notices")}>
           공지사항
         </Tab>
-        <Tab onClick={() => navi("/boards/boards")}>일반</Tab>
-        <Tab onClick={() => navi("/boards/imgBoards")}>갤러리</Tab>
+        <Tab onClick={() => navi("/boards")}>일반</Tab>
+        <Tab onClick={() => navi("/imgBoards")}>갤러리</Tab>
       </TabMenu>
 
       {/* 테이블 */}

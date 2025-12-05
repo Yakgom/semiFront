@@ -39,7 +39,7 @@ const BoardForm = () => {
     formData.append("boardContent", boardContent);
 
     api
-      .post("/boards/boards", formData, {
+      .post("/boards", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           // Authorization은 인터셉터에서 자동
@@ -48,7 +48,7 @@ const BoardForm = () => {
       .then((res) => {
         if (res.status === 201) {
           alert(res.data?.message || "게시글이 등록되었습니다!");
-          navi("/boards/boards");
+          navi("/boards");
         }
       })
       .catch((err) => {

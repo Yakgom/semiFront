@@ -69,11 +69,11 @@ const ImgBoardForm = () => {
     });
 
     api
-      .post("/boards/imgBoards", formData)
+      .post("/imgBoards", formData)
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
           alert(res.data?.message || "갤러리 게시글이 등록되었습니다!");
-          navi("/boards/imgBoards");
+          navi("/imgBoards");
         }
       })
       .catch((err) => {

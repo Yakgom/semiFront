@@ -46,8 +46,8 @@ const Board = () => {
     const isSearch = isSearchMode && searchParams;
 
     const url = isSearch
-      ? "/boards/boards/search"
-      : "/boards/boards";
+      ? "/boards/search"
+      : "/boards";
 
     const params = isSearch
       ? {
@@ -74,7 +74,7 @@ const Board = () => {
 
   // 상세 페이지 이동
   const handleView = (id) => {
-    navi(`/boards/boards/${id}`);
+    navi(`/boards/${id}`);
   };
 
   // 검색 버튼 클릭
@@ -110,11 +110,11 @@ const Board = () => {
       </Header>
 
       <TabMenu>
-        <Tab onClick={() => navi("/boards/notices")}>공지사항</Tab>
-        <Tab $active onClick={() => navi("/boards/boards")}>
+        <Tab onClick={() => navi("/notices")}>공지사항</Tab>
+        <Tab $active onClick={() => navi("/boards")}>
           일반
         </Tab>
-        <Tab onClick={() => navi("/boards/imgBoards")}>갤러리</Tab>
+        <Tab onClick={() => navi("/imgBoards")}>갤러리</Tab>
       </TabMenu>
 
       <Table>
@@ -252,7 +252,7 @@ const Board = () => {
               navi("/members/login");
               return;
             }
-            navi("/boards/boards/write");
+            navi("/boards/write");
           }}
         >
           글쓰기

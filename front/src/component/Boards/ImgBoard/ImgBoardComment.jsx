@@ -1,5 +1,3 @@
-// src/components/boards/imgBoard/ImgBoardComment.jsx
-
 import { useEffect, useContext, useState, useRef } from "react";
 import api from "../Api.jsx";
 import { AuthContext } from "../../../context/AuthContext.jsx";

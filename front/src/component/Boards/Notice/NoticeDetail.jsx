@@ -30,13 +30,13 @@ const NoticeDetail = () => {
 
     setLoading(true);
     api
-      .get(`/boards/notices/${id}`)
+      .get(`/notices/${id}`)
       .then((res) => setNotice(res.data))
       .catch((err) => {
         console.error("공지 상세 조회 실패:", err);
         // 기본 에러 메시지는 인터셉터에서, 여긴 사용자용 추가 메시지
         alert("공지글을 불러올 수 없습니다.");
-        navi("/boards/notices");
+        navi("/notices");
       })
       .finally(() => {
         setLoading(false);
@@ -66,7 +66,7 @@ const NoticeDetail = () => {
 
       <Content>{notice.noticeContent}</Content>
 
-      <BackButton onClick={() => navi("/boards/notices")}>
+      <BackButton onClick={() => navi("/notices")}>
         목록보기
       </BackButton>
     </Container>

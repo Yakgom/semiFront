@@ -45,7 +45,7 @@ const ImgBoardDetail = () => {
 
     setLoading(true);
     api
-      .get(`/boards/imgBoards/${id}`)
+      .get(`/imgBoards/${id}`)
       .then((res) => {
         const data = res.data;
         setImgBoard(data);
@@ -55,7 +55,7 @@ const ImgBoardDetail = () => {
       .catch((err) => {
         console.error("갤러리 상세보기 로딩 실패:", err);
         alert("게시글을 불러오는 데 실패했습니다.");
-        navi("/boards/imgBoards");
+        navi("/imgBoards");
       })
       .finally(() => {
         setLoading(false);
@@ -73,11 +73,11 @@ const ImgBoardDetail = () => {
     if (!window.confirm("정말 삭제할까요?")) return;
 
     api
-      .delete(`/boards/imgBoards/${id}`)
+      .delete(`/imgBoards/${id}`)
       .then((res) => {
         const msg = res.data?.message || "삭제되었습니다!";
         alert(msg);
-        navi("/boards/imgBoards");
+        navi("/imgBoards");
       })
       .catch((err) => {
         console.error("삭제 실패:", err);
@@ -113,7 +113,7 @@ const ImgBoardDetail = () => {
     }
 
     api
-      .put(`/boards/imgBoards/${id}`, formData)
+      .put(`/imgBoards/${id}`, formData)
       .then((res) => {
         alert("수정되었습니다!");
 
@@ -145,7 +145,7 @@ const ImgBoardDetail = () => {
     }
 
     api
-      .post(`/boards/imgBoards/${id}/report`, { reason })
+      .post(`/imgBoards/${id}/report`, { reason })
       .then((res) => {
         const msg =
           res.data?.message ||
@@ -278,7 +278,7 @@ const ImgBoardDetail = () => {
       <BottomArea>
         <TopButtonRow>
           <div>
-            <Button onClick={() => navi("/boards/imgBoards")}>목록보기</Button>
+            <Button onClick={() => navi("/imgBoards")}>목록보기</Button>
 
             {!isWriter && (
               <>

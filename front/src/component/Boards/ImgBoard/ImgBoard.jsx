@@ -44,8 +44,8 @@ const ImgBoard = () => {
     const isSearch = isSearchMode && searchParams;
 
     const url = isSearch
-      ? "/boards/imgBoards/search"
-      : "/boards/imgBoards";
+      ? "/imgBoards/search"
+      : "/imgBoards";
 
     const params = isSearch
       ? {
@@ -72,7 +72,7 @@ const ImgBoard = () => {
 
   // 상세 이동
   const handleView = (id) => {
-    navi(`/boards/imgBoards/${id}`);
+    navi(`/imgBoards/${id}`);
   };
 
   // 검색 버튼 클릭
@@ -108,9 +108,9 @@ const ImgBoard = () => {
       </Header>
 
       <TabMenu>
-        <Tab onClick={() => navi("/boards/notices")}>공지사항</Tab>
-        <Tab onClick={() => navi("/boards/boards")}>일반</Tab>
-        <Tab $active onClick={() => navi("/boards/imgBoards")}>
+        <Tab onClick={() => navi("/notices")}>공지사항</Tab>
+        <Tab onClick={() => navi("/boards")}>일반</Tab>
+        <Tab $active onClick={() => navi("/imgBoards")}>
           갤러리
         </Tab>
       </TabMenu>
@@ -250,7 +250,7 @@ const ImgBoard = () => {
               navi("/members/login");
               return;
             }
-            navi("/boards/imgBoards/write");
+            navi("/imgBoards/write");
           }}
         >
           글쓰기

@@ -45,7 +45,7 @@ const BoardDetail = () => {
 
     setLoading(true);
     api
-      .get(`/boards/boards/${id}`)
+      .get(`/boards/${id}`)
       .then((res) => {
         setBoard(res.data);
         setEditTitle(res.data.boardTitle);
@@ -55,7 +55,7 @@ const BoardDetail = () => {
         console.error("상세보기 로딩 실패:", err);
         // 401/403/500 등은 인터셉터에서 안내
         alert("게시글을 불러오는 데 실패했습니다.");
-        navi("/boards/boards");
+        navi("/boards");
       })
       .finally(() => {
         setLoading(false);
@@ -67,11 +67,11 @@ const BoardDetail = () => {
     if (!window.confirm("정말 삭제할까요?")) return;
 
     api
-      .delete(`/boards/boards/${id}`)
+      .delete(`/boards/${id}`)
       .then((res) => {
         const msg = res.data?.message || "삭제되었습니다!";
         alert(msg);
-        navi("/boards/boards");
+        navi("/boards");
       })
       .catch((err) => {
         console.error("삭제 실패:", err);
@@ -90,7 +90,7 @@ const BoardDetail = () => {
     if (!window.confirm("수정 내용을 저장할까요?")) return;
 
     api
-      .put(`/boards/boards/${id}`, {
+      .put(`/boards/${id}`, {
         boardTitle: editTitle,
         boardContent: editContent,
       })
@@ -126,7 +126,7 @@ const BoardDetail = () => {
     }
 
     api
-      .post(`/boards/boards/${id}/report`, { reason })
+      .post(`/boards/${id}/report`, { reason })
       .then((res) => {
         const msg =
           res.data?.message ||
@@ -201,7 +201,7 @@ const BoardDetail = () => {
       <BottomArea>
         <TopButtonRow>
           <div>
-            <Button onClick={() => navi("/boards/boards")}>목록보기</Button>
+            <Button onClick={() => navi("/boards")}>목록보기</Button>
 
             {/* 자신 글이 아닐 때만 신고 버튼 노출 */}
             {!isWriter && (
