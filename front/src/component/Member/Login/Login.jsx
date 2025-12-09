@@ -55,10 +55,10 @@ const Login = () => {
     const regexpPwd = /^[a-zA-Z0-9]*$/;
 
     if (!regexpPwd.test(memberId)) {
-      setMsg("아이디나 비밀번호는 영문이거나 숫자만 사용가능합니다.");
+      setMsg("아이디나 비밀번호를 확인해주세요");
       return;
     } else if (!regexpPwd.test(memberPwd)) {
-      setMsg("아이디나 비밀번호는 영문이거나 숫자만 사용가능합니다.");
+      setMsg("아이디나 비밀번호를 확인해주세요");
       return;
     } else {
       setMsg("");
