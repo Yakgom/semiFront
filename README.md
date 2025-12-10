@@ -225,17 +225,16 @@ front/
 
 ---
 
-## 🎬 시연 영상
+## 🎬 발표 자료
 
-### 시연 화면 (GIF)
+### PPT
 
 <div align="center">
 
-![시연 화면 1](https://via.placeholder.com/800x450?text=Share+EV+Demo+GIF)
+![PPT](https://www.canva.com/design/DAG6mvIZfgc/Jx0w7OrcKmoG9oADFLLASg/view?utm_content=DAG6mvIZfgc&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h23044f9e19)
 *메인 페이지 및 차량 예약 시연*
 
-![시연 화면 2](https://via.placeholder.com/800x450?text=Admin+Dashboard+Demo)
-*관리자 대시보드 시연*
+
 
 </div>
 
@@ -243,9 +242,10 @@ front/
 
 프로젝트 전체 시연 영상을 확인하실 수 있습니다.
 
-[![시연 영상](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
+시연 영상의 경우 GIF로 대체하고자 합니다. 해당 부분은 빠른 시일내에 촬영하여 GIF로 변경하겠습니다. 
 
-> 📌 **참고**: 위 링크는 예시입니다. 실제 유튜브 영상 링크로 교체해주세요.
+
+> 
 
 ---
 
@@ -373,7 +373,6 @@ server: {
 | 팀원 4 | Frontend Developer | 관리자 대시보드 및 관리 기능 | [@kanghyunseong](https://github.com/kanghyunseong) |
 | 팀원 5 | Frontend Developer | 충전소 및 공지사항 시스템 | [@ju1002](https://github.com/ju1002) |
 
-> 📌 **참고**: 위 정보는 예시입니다. 실제 팀원 정보로 교체해주세요.
 
 ---
 
