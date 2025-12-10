@@ -231,7 +231,7 @@ front/
 
 <div align="center">
 
-![PPT 프레젠테이션]( https://www.canva.com/design/DAG6mvIZfgc/Jx0w7OrcKmoG9oADFLLASg/view?utm_content=DAG6mvIZfgc&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h23044f9e19 )
+![PPT 프레젠테이션](https://www.canva.com/design/DAG6mvIZfgc/Jx0w7OrcKmoG9oADFLLASg/view?utm_content=DAG6mvIZfgc&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h23044f9e19)
 *ppt*
 
 
